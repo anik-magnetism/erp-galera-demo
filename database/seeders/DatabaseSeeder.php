@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Large dataset seeder (dispatches queued jobs for heavy imports)
+        if (class_exists(\Database\Seeders\LargeDatasetSeeder::class)) {
+            $this->call(\Database\Seeders\LargeDatasetSeeder::class);
+        }
     }
 }
