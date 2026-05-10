@@ -21,6 +21,27 @@ services:
       - erp_net
 
   # ----------------------------
+  # Queue Worker (runs Laravel queue:work)
+  # ----------------------------
+  worker:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: gelera_laravel_worker
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - redis
+      - galera1
+    environment:
+      - QUEUE_CONNECTION=redis
+    command: php artisan queue:work --queue=default --sleep=3 --tries=3
+    networks:
+      - erp_net
+    restart: always
+
+  # ----------------------------
   # Redis
   # ----------------------------
   redis:
