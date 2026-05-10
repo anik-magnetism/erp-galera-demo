@@ -16,4 +16,4 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-CMD bash -c "composer install && php artisan serve --host=0.0.0.0 --port=8000"
+CMD ["bash","-lc","composer install --no-interaction --prefer-dist && php artisan serve --host=0.0.0.0 --port=8000"]
